@@ -1,0 +1,22 @@
+{
+  "name": "pomodoro-pet",
+  "version": "1.0.0",
+  "description": "A Pomodoro timer pet that sits on your Mac desktop",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron .",
+    "build": "electron-builder --mac"
+  },
+  "devDependencies": {
+    "electron": "^33.0.0",
+    "electron-builder": "^25.0.0"
+  },
+  "build": {
+    "appId": "com.shamir.pomodoro-pet",
+    "productName": "Pomodoro Pet",
+    "mac": {
+      "target": "dmg",
+      "category": "public.app-category.productivity"
+    }
+  }
+}

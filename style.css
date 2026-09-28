@@ -1,0 +1,265 @@
+/* Pomodoro Pet — transparent floating window */
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+  background: transparent;
+  font-family: -apple-system, BlinkMacSystemFont, "SF Pro Rounded", "Segoe UI", sans-serif;
+  user-select: none;
+  -webkit-app-region: drag;
+  overflow: hidden;
+  width: 220px;
+  height: 280px;
+}
+
+.pet-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  padding: 14px;
+  background: linear-gradient(135deg, rgba(20,20,40,0.88), rgba(30,30,60,0.92));
+  border-radius: 24px;
+  border: 2px solid rgba(255,255,255,0.12);
+  box-shadow: 0 12px 40px rgba(0,0,0,0.45);
+  backdrop-filter: blur(20px);
+  -webkit-app-region: no-drag;
+  position: relative;
+}
+
+/* Timer */
+.timer {
+  font-size: 36px;
+  font-weight: 700;
+  color: #fff;
+  letter-spacing: 2px;
+  font-variant-numeric: tabular-nums;
+  line-height: 1;
+  text-shadow: 0 2px 8px rgba(0,0,0,0.4);
+}
+
+.phase {
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  color: #6c8cff;
+  background: rgba(108,140,255,0.15);
+  padding: 3px 14px;
+  border-radius: 999px;
+}
+
+.phase.break { color: #4ade80; background: rgba(74,222,128,0.15); }
+.phase.long-break { color: #f472b6; background: rgba(244,114,182,0.15); }
+
+/* Pet */
+.pet {
+  position: relative;
+  width: 72px;
+  height: 72px;
+  cursor: pointer;
+  -webkit-app-region: no-drag;
+}
+
+.pet-body {
+  width: 64px;
+  height: 56px;
+  background: linear-gradient(135deg, #fbbf24, #f59e0b);
+  border-radius: 50% 50% 45% 45%;
+  position: absolute;
+  bottom: 8px;
+  left: 4px;
+  animation: breathe 2.4s ease-in-out infinite;
+}
+
+.pet-face {
+  position: absolute;
+  top: 14px;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+/* Eyes */
+.eye {
+  width: 8px;
+  height: 8px;
+  background: #1e1b4b;
+  border-radius: 50%;
+  position: absolute;
+  animation: blink 3.5s ease-in-out infinite;
+}
+.eye.left { left: -14px; top: 0; }
+.eye.right { right: -14px; top: 0; }
+
+/* Mouth */
+.mouth {
+  width: 12px;
+  height: 6px;
+  border-bottom: 2.5px solid #1e1b4b;
+  border-radius: 0 0 50% 50%;
+  position: absolute;
+  top: 12px;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+/* Ears */
+.pet-ear {
+  width: 0;
+  height: 0;
+  border-left: 10px solid transparent;
+  border-right: 10px solid transparent;
+  border-bottom: 16px solid #fbbf24;
+  position: absolute;
+  top: -4px;
+}
+.pet-ear.left { left: 8px; transform: rotate(-20deg); }
+.pet-ear.right { right: 8px; transform: rotate(20deg); }
+
+/* Tail */
+.pet-tail {
+  width: 24px;
+  height: 8px;
+  background: #f59e0b;
+  border-radius: 0 20px 20px 0;
+  position: absolute;
+  right: -14px;
+  bottom: 18px;
+  transform-origin: left center;
+  animation: wag 1s ease-in-out infinite;
+}
+
+/* Shadow */
+.pet-shadow {
+  width: 40px;
+  height: 8px;
+  background: rgba(0,0,0,0.3);
+  border-radius: 50%;
+  position: absolute;
+  bottom: -4px;
+  left: 50%;
+  transform: translateX(-50%);
+  filter: blur(4px);
+}
+
+/* Status */
+.status {
+  font-size: 11px;
+  color: rgba(255,255,255,0.6);
+  text-align: center;
+  min-height: 16px;
+}
+
+/* Controls */
+.controls {
+  display: flex;
+  gap: 8px;
+  -webkit-app-region: no-drag;
+}
+
+.btn {
+  width: 36px;
+  height: 36px;
+  border: none;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.12);
+  color: #fff;
+  font-size: 15px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.15s;
+}
+.btn:hover { background: rgba(255,255,255,0.22); transform: scale(1.08); }
+.btn:active { transform: scale(0.95); }
+
+.btn.small { width: auto; padding: 6px 16px; border-radius: 8px; font-size: 13px; font-weight: 600; }
+
+/* Settings panel */
+.settings-panel {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: rgba(15,15,35,0.97);
+  border-radius: 0 0 24px 24px;
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  z-index: 10;
+  -webkit-app-region: no-drag;
+}
+
+.setting-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.setting-row label { font-size: 12px; color: rgba(255,255,255,0.7); }
+.setting-row input {
+  width: 54px;
+  background: rgba(255,255,255,0.1);
+  border: 1px solid rgba(255,255,255,0.15);
+  border-radius: 6px;
+  color: #fff;
+  text-align: center;
+  padding: 5px;
+  font-size: 13px;
+}
+
+/* Close button */
+.close-btn {
+  position: absolute;
+  top: 6px;
+  right: 10px;
+  background: none;
+  border: none;
+  color: rgba(255,255,255,0.35);
+  font-size: 18px;
+  cursor: pointer;
+  -webkit-app-region: no-drag;
+  transition: color 0.15s;
+}
+.close-btn:hover { color: #ef4444; }
+
+/* ===== ANIMATIONS ===== */
+
+@keyframes breathe {
+  0%, 100% { transform: scaleY(1); }
+  50% { transform: scaleY(1.05); }
+}
+
+@keyframes blink {
+  0%, 92%, 100% { transform: scaleY(1); }
+  95% { transform: scaleY(0.1); }
+}
+
+@keyframes wag {
+  0%, 100% { transform: rotate(-10deg); }
+  50% { transform: rotate(20deg); }
+}
+
+/* Working state */
+.phase.work + .pet .pet-body { animation: breathe 2.4s ease-in-out infinite; }
+.phase.work ~ .status { color: rgba(108,140,255,0.7); }
+
+/* Break state — pet relaxes */
+.pet.break .pet-body { animation: breathe 3.5s ease-in-out infinite; }
+.pet.break .pet-tail { animation: wag 1.6s ease-in-out infinite; }
+.pet.break .eye { height: 3px; border-radius: 4px; }
+
+/* Happy / completed state */
+.pet.happy .pet-body { animation: happy-bounce 0.5s ease-in-out 3; }
+.pet.happy .eye { height: 5px; width: 10px; border-radius: 50% 50% 0 0; background: transparent; border-top: 3px solid #1e1b4b; }
+.pet.happy .pet-tail { animation: wag 0.3s ease-in-out infinite; }
+
+@keyframes happy-bounce {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-8px); }
+}
+
+/* Idle thinking */
+.pet.idle .pet-tail { animation: wag 1.8s ease-in-out infinite; }
