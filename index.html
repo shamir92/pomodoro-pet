@@ -8,61 +8,82 @@
 </head>
 <body>
   <div class="pet-container" id="petContainer">
-    <!-- Timer display -->
+    <!-- Close button -->
+    <button class="close-btn" id="closeBtn">×</button>
+
+    <!-- Timer -->
     <div class="timer" id="timerDisplay">25:00</div>
 
-    <!-- Phase label -->
+    <!-- Phase pill -->
     <div class="phase" id="phaseLabel">Work</div>
+
+    <!-- Pomodoro progress dots -->
+    <div class="dots" id="dots"></div>
 
     <!-- The pet -->
     <div class="pet" id="pet">
-      <div class="pet-body">
-        <div class="pet-face">
-          <div class="eye left" id="eyeLeft"></div>
-          <div class="eye right" id="eyeRight"></div>
-          <div class="mouth" id="mouth"></div>
+      <div class="pet-inner" id="petInner">
+        <!-- generic structure reused for all animals -->
+        <div class="pet-tail" id="petTail"></div>
+        <div class="pet-body">
+          <div class="pet-ear left" id="earL"></div>
+          <div class="pet-ear right" id="earR"></div>
+          <div class="pet-face">
+            <div class="blush left"></div>
+            <div class="blush right"></div>
+            <div class="eye left" id="eyeL">
+              <div class="pupil"></div>
+            </div>
+            <div class="eye right" id="eyeR">
+              <div class="pupil"></div>
+            </div>
+            <div class="nose" id="nose"></div>
+            <div class="mouth" id="mouth"></div>
+            <div class="whiskers" id="whiskers">
+              <span class="w left"></span>
+              <span class="w right"></span>
+            </div>
+          </div>
         </div>
-        <div class="pet-ear left"></div>
-        <div class="pet-ear right"></div>
+        <div class="pet-shadow"></div>
+        <div class="pet-feet">
+          <span class="foot lf"></span>
+          <span class="foot rf"></span>
+        </div>
       </div>
-      <div class="pet-shadow"></div>
-      <div class="pet-tail" id="petTail"></div>
     </div>
 
-    <!-- Status text -->
+    <!-- Status -->
     <div class="status" id="statusText">Let's work! 🐱</div>
 
     <!-- Controls -->
     <div class="controls">
-      <button class="btn" id="startBtn" title="Start">▶</button>
-      <button class="btn" id="pauseBtn" title="Pause" style="display:none">⏸</button>
+      <button class="btn primary" id="startBtn" title="Start">▶</button>
+      <button class="btn primary" id="pauseBtn" title="Pause" style="display:none">⏸</button>
       <button class="btn" id="resetBtn" title="Reset">↺</button>
       <button class="btn" id="settingsBtn" title="Settings">⚙</button>
     </div>
 
-    <!-- Settings panel -->
+    <!-- Settings -->
     <div class="settings-panel" id="settingsPanel" style="display:none">
-      <div class="setting-row">
-        <label>Work</label>
-        <input type="number" id="workInput" min="1" max="90" value="25" />
-      </div>
-      <div class="setting-row">
-        <label>Short Break</label>
-        <input type="number" id="shortInput" min="1" max="30" value="5" />
-      </div>
-      <div class="setting-row">
-        <label>Long Break</label>
-        <input type="number" id="longInput" min="1" max="60" value="15" />
-      </div>
-      <div class="setting-row">
-        <label>Goal (pomodoros)</label>
-        <input type="number" id="goalInput" min="1" max="12" value="4" />
-      </div>
-      <button class="btn small" id="saveBtn">Save</button>
-    </div>
+      <div class="sp-title">Settings</div>
+      <div class="setting-row"><label>Work</label><input type="number" id="workInput" min="1" max="90" value="25" /></div>
+      <div class="setting-row"><label>Short Break</label><input type="number" id="shortInput" min="1" max="30" value="5" /></div>
+      <div class="setting-row"><label>Long Break</label><input type="number" id="longInput" min="1" max="60" value="15" /></div>
+      <div class="setting-row"><label>Goal</label><input type="number" id="goalInput" min="1" max="12" value="4" /></div>
 
-    <!-- Close button -->
-    <button class="close-btn" id="closeBtn">×</button>
+      <div class="sp-title" style="margin-top:6px">Pet</div>
+      <div class="animal-picker" id="animalPicker">
+        <button class="animal-btn active" data-animal="cat" title="Cat">🐱</button>
+        <button class="animal-btn" data-animal="shiba" title="Shiba Inu">🐕</button>
+        <button class="animal-btn" data-animal="labrador" title="Golden Labrador">🐶</button>
+        <button class="animal-btn" data-animal="bunny" title="Bunny">🐰</button>
+        <button class="animal-btn" data-animal="penguin" title="Penguin">🐧</button>
+        <button class="animal-btn" data-animal="frog" title="Frog">🐸</button>
+      </div>
+
+      <button class="btn small save" id="saveBtn">Save</button>
+    </div>
   </div>
 
   <script src="renderer.js"></script>
