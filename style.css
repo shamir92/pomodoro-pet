@@ -281,12 +281,21 @@ body {
   font-size: 13px;
   font-weight: 700;
 }
-.btn.save { background: linear-gradient(135deg, #5eead4, #14b8a6); color: #0a0a1a; }
+.btn.save {
+  background: linear-gradient(135deg, #5eead4, #14b8a6);
+  color: #0a0a1a;
+  position: sticky;
+  bottom: 0;
+  margin-top: 4px;
+  z-index: 11;
+}
 
 /* ===== SETTINGS ===== */
 .settings-panel {
   position: absolute;
   bottom: 0; left: 0; right: 0;
+  max-height: 100%;
+  overflow-y: auto;
   background: rgba(8,8,24,0.98);
   border-radius: 0 0 28px 28px;
   padding: 14px 16px 16px;
@@ -297,7 +306,13 @@ body {
   -webkit-app-region: no-drag;
   border-top: 1px solid rgba(255,255,255,0.1);
   box-shadow: 0 -8px 30px rgba(0,0,0,0.5);
+  -webkit-overflow-scrolling: touch;
 }
+
+/* Style the scrollbar */
+.settings-panel::-webkit-scrollbar { width: 4px; }
+.settings-panel::-webkit-scrollbar-track { background: transparent; }
+.settings-panel::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.2); border-radius: 4px; }
 .sp-close {
   position: absolute;
   top: 8px; right: 12px;
