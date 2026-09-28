@@ -8,10 +8,10 @@ function createWindow() {
   const { width, height } = screen.getPrimaryDisplay().workAreaSize;
 
   win = new BrowserWindow({
-    width: 220,
-    height: 280,
-    x: width - 260,
-    y: height - 340,
+    width: 240,
+    height: 340,
+    x: width - 280,
+    y: height - 380,
     transparent: true,
     frame: false,
     alwaysOnTop: true,
@@ -30,20 +30,28 @@ function createWindow() {
 }
 
 function createTray() {
-  const iconPath = path.join(__dirname, "icon.png");
   try {
+    const iconPath = path.join(__dirname, "icon.png");
     tray = new Tray(iconPath);
+    const menu = Menu.buildFromTemplate([
+      { label: "Show Pet", click: () => win && win.show() },
+      { label: "Quit", click: () => app.quit() },
+    ]);
+    tray.setToolTip("Pomodoro Pet");
+    tray.setContextMenu(menu);
   } catch {
-    // If icon missing, use a blank one — tray optional on Mac
-    return;
+    // tray optional
   }
-  const menu = Menu.buildFromTemplate([
-    { label: "Show Pet", click: () => win && win.show() },
-    { label: "Quit", click: () => app.quit() },
-  ]);
-  tray.setToolTip("Pomodoro Pet");
-  tray.setContextMenu(menu);
 }
+
+// IPC handlers
+ipcMain.handle("quit", () => {
+  app.quit();
+});
+
+ipcMain.handle("minimize", () => {
+  if (win) win.hide();
+});
 
 app.whenReady().then(() => {
   createWindow();

@@ -287,16 +287,25 @@ body {
 .settings-panel {
   position: absolute;
   bottom: 0; left: 0; right: 0;
-  background: rgba(10,10,28,0.97);
+  background: rgba(8,8,24,0.98);
   border-radius: 0 0 28px 28px;
-  padding: 16px;
+  padding: 14px 16px 16px;
   display: flex;
   flex-direction: column;
-  gap: 9px;
+  gap: 7px;
   z-index: 10;
   -webkit-app-region: no-drag;
-  border-top: 1px solid rgba(255,255,255,0.08);
+  border-top: 1px solid rgba(255,255,255,0.1);
+  box-shadow: 0 -8px 30px rgba(0,0,0,0.5);
 }
+.sp-close {
+  position: absolute;
+  top: 8px; right: 12px;
+  background: none; border: none;
+  color: rgba(255,255,255,0.4);
+  font-size: 18px; cursor: pointer;
+}
+.sp-close:hover { color: #ef4444; }
 .sp-title {
   font-size: 10px;
   font-weight: 800;

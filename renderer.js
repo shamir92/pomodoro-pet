@@ -231,6 +231,7 @@ document.addEventListener("DOMContentLoaded", () => {
   $("pauseBtn").addEventListener("click", pause);
   $("resetBtn").addEventListener("click", reset);
   $("settingsBtn").addEventListener("click", toggleSettings);
+  $("spClose").addEventListener("click", toggleSettings);
   $("saveBtn").addEventListener("click", saveSettings);
   $("closeBtn").addEventListener("click", close);
   $("pet").addEventListener("click", petClick);
